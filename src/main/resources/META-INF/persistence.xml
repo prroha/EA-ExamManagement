@@ -1,0 +1,25 @@
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.1">
+    <persistence-unit name="studentPU" transaction-type="JTA">
+        <class>org.proha.model.entity.User</class>
+                <class>org.proha.model.entity.Student</class>
+                <class>org.proha.model.entity.Subject</class>
+        <class>org.proha.model.entity.Exam</class>
+                <class>org.proha.model.entity.Result</class>
+        <properties>
+            <!-- Derby Database connection properties -->
+            <!-- This will store the database inside the 'db' directory in the root directory -->
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:derby:./EAStudent/db/ea_student;"/>
+            <property name="jakarta.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+            <property name="jakarta.persistence.jdbc.user" value="user"/>
+            <property name="jakarta.persistence.jdbc.password" value="password"/>
+
+            <!-- JPA properties -->
+            <property name="jakarta.persistence.schema-generation.database.action" value="update"/>
+            <property name="jakarta.persistence.sql-load-script-source" value="META-INF/load.sql"/>
+
+            <!-- Hibernate properties -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>

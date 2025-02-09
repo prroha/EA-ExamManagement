@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  wildfly:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: eastudent-wildfly
+    ports:
+      - "8080:8080" # Map WildFly port to the host
+    volumes:
+      - derby-data:/opt/jboss/wildfly/derby-data # Mount volume for Derby data persistence
+    environment:
+      - JAVA_OPTS=-Dderby.system.home=/opt/jboss/wildfly/derby-data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  derby-data:
+    driver: local

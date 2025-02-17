@@ -28,16 +28,16 @@
             if (user != null) {
         %>
         <p>Welcome, <%= user.toString() %>!</p>
-        <form action="${pageContext.request.contextPath}/logout" method="post">
+        <form action="${pageContext.request.contextPath}/auth/logout" method="get">
             <button type="submit" class="button button-primary">Logout</button>
         </form>
         <%
         } else {
         %>
-        <form action="${pageContext.request.contextPath}/login" method="get">
+        <form action="${pageContext.request.contextPath}/auth/login" method="get">
             <button type="submit" class="button button-primary">Login</button>
         </form>
-        <form action="${pageContext.request.contextPath}/register" method="get">
+        <form action="${pageContext.request.contextPath}/auth/register" method="get">
             <button type="submit" class="button button-secondary">Register</button>
         </form>
         <%

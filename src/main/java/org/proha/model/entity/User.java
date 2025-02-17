@@ -2,13 +2,10 @@ package org.proha.model.entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "students")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -21,8 +18,11 @@ public class User {
     @Column(name = "username", unique = true, nullable = false)
     private String username;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "salt", nullable = false)
+    private String salt;
 
     @Column(name = "email", unique = true, nullable = false)
     private String email;
@@ -35,16 +35,18 @@ public class User {
     public User(UUID id) {
         this.id = id;
     }
+
     public User(String name, String email) {
         this.name = name;
         this.email = email;
     }
 
-    public User(String name, String email, String username, String password) {
+    public User(String name, String email, String username, String password, String salt) {
         this.name = name;
         this.email = email;
         this.username = username;
         this.password = password;
+        this.salt = salt;  // Save salt during registration
     }
 
     public UUID getId() {
@@ -82,13 +84,24 @@ public class User {
     public String getUsername() {
         return username;
     }
+
     public void setUsername(String username) {
         this.username = username;
     }
+
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }

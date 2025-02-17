@@ -5,40 +5,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/base.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/admin.css">
 </head>
 <body>
 <!-- Header -->
 <header class="admin-header">
-    <div class="header__toggle">
-        <i class="bx bx-menu" id="sidebarToggle"></i>
-    </div>
-    <div class="header__content">
-        <div class="header__title">XYZ Academy</div>
-
+    <div class="header__left">
+        <%
+            Object user = session.getAttribute("authenticatedUser");
+            if (user != null) {
+        %>
+        <div class="header__toggle">
+            <i class="bx bx-menu" id="sidebarToggle"></i>
         </div>
+        <%
+            }
+        %>
+        <div class="header__title">XYZ Academy</div>
+    </div>
+    <div class="header__right">
+        <%
+            if (user != null) {
+        %>
+        <p>Welcome, <%= user.toString() %>!</p>
+        <form action="${pageContext.request.contextPath}/logout" method="post">
+            <button type="submit" class="button button-primary">Logout</button>
+        </form>
+        <%
+        } else {
+        %>
+        <form action="${pageContext.request.contextPath}/login" method="get">
+            <button type="submit" class="button button-primary">Login</button>
+        </form>
+        <form action="${pageContext.request.contextPath}/register" method="get">
+            <button type="submit" class="button button-secondary">Register</button>
+        </form>
+        <%
+            }
+        %>
     </div>
 </header>
 
 <!-- Sidebar -->
+
+<%
+    if (user != null) {
+%>
 <aside class="sidebar">
-    <ul class="sidebar__menu">
-        <li>
-            <a href="<%= request.getContextPath() %>/dashboard">Dashboard</a>
+    <ul class="sidebar__nav">
+        <li class="sidebar__item">
+            <a class="sidebar__link" href="<%= request.getContextPath() %>/dashboard">Dashboard</a>
         </li>
-        <li>
-            <a href="<%= request.getContextPath() %>/students">Students</a>
+        <li class="sidebar__item">
+            <a class="sidebar__link" href="<%= request.getContextPath() %>/students">Students</a>
         </li>
-        <li>
-            <a href="<%= request.getContextPath() %>/exams">Exams</a>
+        <li class="sidebar__item">
+            <a class="sidebar__link" href="<%= request.getContextPath() %>/exams">Exams</a>
         </li>
-        <li>
-            <a href="<%= request.getContextPath() %>/results">Results</a>
+        <li class="sidebar__item">
+            <a class="sidebar__link" href="<%= request.getContextPath() %>/results">Results</a>
         </li>
     </ul>
 </aside>
-
+<%
+    }
+%>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const toggle = document.querySelector('.header__toggle');

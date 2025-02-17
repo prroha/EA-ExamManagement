@@ -230,6 +230,36 @@
     z-index: var(--z-fixed);
 }
 
+/* Header Sections */
+.admin-header .header__left,
+.admin-header .header__right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3); /* Consistent spacing */
+}
+
+/* Sidebar Toggle */
+.header__toggle {
+    margin-right: var(--space-2);
+    cursor: pointer;
+}
+
+/* Remove unnecessary margins from text */
+.header__right p {
+    margin: 0;
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+    .admin-layout {
+        grid-template-columns: 1fr; /* Full width layout for smaller screens */
+    }
+
+    .admin-header {
+        padding: 0 var(--space-4);
+    }
+}
+
 /* Admin Sidebar */
 .sidebar {
     background: var(--gray-color);
@@ -261,7 +291,7 @@
     align-items: center;
     gap: var(--space-3);
     padding: var(--space-3) var(--space-4);
-    color: var(--neutral-300);
+    color: var(--neutral-100);
     border-radius: var(--border-radius);
     transition: all var(--transition-fast);
 }

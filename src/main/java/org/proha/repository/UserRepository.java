@@ -44,7 +44,8 @@ public class UserRepository {
     }
 
     public Optional<User> findByUsername(String username) {
-        User user = entityManager.find(User.class, username);
+        String query = "SELECT s FROM User s WHERE s.username = :username";
+        User user = entityManager.createQuery(query, User.class).setParameter("username", username).getSingleResult();
         return Optional.ofNullable(user);
     }
     public Optional<User> findByEmail(String email) {

@@ -172,9 +172,6 @@ public class ResultController extends BaseController {
         LocalDate resultDate = LocalDate.parse(request.getParameter("resultDate"));
         ResultDTO result = null;
 
-        System.out.println("Result ID: " + resultId);
-        System.out.println("Exam ID: " + examId);
-        System.out.println("Student ID: " + studentId);
         try {
             result = new ResultDTO(resultId, studentId, examId, marksObtained, grade, resultDate, remarks);
 

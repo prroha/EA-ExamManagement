@@ -5,14 +5,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.proha.exceptions.ValidationException;
 import org.proha.model.dto.UserDTO;
-import org.proha.model.entity.User;
 import org.proha.notification.model.NotificationType;
 import org.proha.service.AuthService;
-import org.proha.service.ResultService;
-import org.proha.service.StudentService;
-import org.proha.service.SubjectService;
 import org.proha.utils.CommonMethods;
 
 import java.io.IOException;
@@ -33,6 +30,7 @@ public class AuthController extends BaseController {
     private static final String LOGIN_PAGE = "/jsp/auth/login.jsp";
     private static final String REGISTER_PAGE = "/jsp/auth/register.jsp";
     private static final String USER_LIST_PAGE = "/jsp/user/studentList.jsp";
+    private static final String AUTHENTICATED_SESSION_KEY = "authenticatedUser";
     private static final int DEFAULT_PAGE_SIZE = 10;
 
     @Override
@@ -40,18 +38,13 @@ public class AuthController extends BaseController {
             throws ServletException, IOException {
         String pathInfo = request.getPathInfo();
         try {
-            if (pathInfo == null || pathInfo.equals("/") || pathInfo.equals("/auth")) {
-                handleListing(request, response);
-            } else if (pathInfo.equals("/new")) {
-                handleShowForm(request, response, false, null);
-            } else if (pathInfo.equals("/edit")) {
-                handleEditForm(request, response);
-            } else if (pathInfo.equals("/login")) {
-                forwardToPage(request, response, LOGIN_PAGE);
-            } else if (pathInfo.equals("/register")) {
-                forwardToPage(request, response, REGISTER_PAGE);
-            } else {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Page not found");
+            switch (pathInfo) {
+                case "/", "/login" -> checkAuthenticationAndSendToDashboard(request, response);
+                case "/logout" -> handleLogout(request, response);
+                case "/new" -> handleShowForm(request, response, false, null);
+                case "/edit" -> handleEditForm(request, response);
+                case "/register" -> forwardToPage(request, response, REGISTER_PAGE);
+                default -> response.sendError(HttpServletResponse.SC_NOT_FOUND, "Page not found");
             }
         } catch (Exception e) {
             handleException(request, response, e);
@@ -96,6 +89,15 @@ public class AuthController extends BaseController {
         }
     }
 
+    private void checkAuthenticationAndSendToDashboard(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute(AUTHENTICATED_SESSION_KEY) != null) {
+                System.out.println(session.getAttribute(AUTHENTICATED_SESSION_KEY));
+                response.sendRedirect(request.getContextPath() + "/dashboard");
+        } else {
+            forwardToPage(request, response, LOGIN_PAGE);
+        }
+    }
     private void handleListing(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
@@ -200,7 +202,7 @@ public class AuthController extends BaseController {
         try {
             boolean isAuthenticated = authService.authenticate(username, password);
             if (isAuthenticated) {
-                request.getSession().setAttribute("user", username);
+                request.getSession().setAttribute(AUTHENTICATED_SESSION_KEY, username);
                 notificationService.notify("Login successful", NotificationType.SUCCESS);
                 response.sendRedirect(request.getContextPath() + "/dashboard");
             } else {
@@ -237,5 +239,13 @@ public class AuthController extends BaseController {
             LOGGER.log(Level.SEVERE, "Error during registration", e);
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error during registration");
         }
+    }
+    private void handleLogout(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        response.sendRedirect(request.getContextPath() + "/auth/login");
     }
 }

@@ -21,8 +21,8 @@
   <h1>Login</h1>
 
   <jsp:include page="/jsp/includes/notification.jsp" />
-  <div class="card">
-    <form action="${pageContext.request.contextPath}/login" method="post">
+  <div class="card mt-1">
+    <form action="${pageContext.request.contextPath}/auth/login" method="post">
       <div class="content-medium">
         <input type="hidden" name="csrf_token" value="${csrfToken}" />
 

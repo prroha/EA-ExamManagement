@@ -424,6 +424,9 @@ header {
     height: var(--header-height);
     background-color: var(--primary-color);
     color: var(--white-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 /* NAV */
@@ -501,7 +504,7 @@ a.button{
     align-items: baseline;
 }
 .button {
-    background-color: var(--gray-color);
+    /*background-color: var(--gray-color);*/
     color: var(--white-color);
     padding: var(--spacing-small) var(--spacing-medium);
     border: var(--border-width) var(--border-style) var(--border-color);
@@ -662,6 +665,10 @@ input[type="submit"] {
 
 .center {
     justify-content: center;
+}
+
+.left {
+    justify-content: flex-start;
 }
 
 .right {

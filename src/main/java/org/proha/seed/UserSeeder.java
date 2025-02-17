@@ -26,10 +26,12 @@ public class UserSeeder {
     public void seed() {
         if (userRepository.count() == 0) {
             String password1 = "prakash@123";
-            String password2 = "admin@123";
+            String adminPassword = "admin@123";
+            String salt1 = PasswordConfig.generateSalt();
+            String salt2 = PasswordConfig.generateSalt();
             List<User> users = Arrays.asList(
-                    new User("Prakash Dorsey", "prakash@study.xyzuni.edu", "prakash", passwordConfig.hashPassword(password1)),
-                    new User("Admin", "admin@study.xyzuni.edu", "admin", passwordConfig.hashPassword(password2))
+                    new User("Prakash Dorsey", "prakash@study.xyzuni.edu", "prakash", PasswordConfig.hashPassword(password1, salt1), salt1),
+                    new User("Admin", "admin@study.xyzuni.edu", "admin", PasswordConfig.hashPassword(adminPassword, salt2), salt2)
             );
             for (User user : users) {
                 userRepository.save(user);

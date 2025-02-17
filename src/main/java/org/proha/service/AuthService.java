@@ -155,10 +155,12 @@ public class AuthService {
     public void register(UserDTO dto) {
         LOGGER.info("Registering user: {}", dto.getUsername());
         try {
-            String hashedPassword = passwordConfig.hashPassword(dto.getPassword());
+            String salt = PasswordConfig.generateSalt();
+            String hashedPassword = PasswordConfig.hashPassword(dto.getPassword(), salt);
 
             User user = mapper.toEntity(dto);
             user.setPassword(hashedPassword);
+            user.setSalt(salt);
 
             repository.save(user);
 
@@ -185,7 +187,7 @@ public class AuthService {
             if (userOptional.isPresent()) {
                 User user = userOptional.get();
 
-                if (passwordConfig.verifyPassword(password, user.getPassword())) {
+                if (passwordConfig.verifyPassword(password, user.getPassword(), user.getSalt())) {
                     LOGGER.info("User {} logged in successfully.", username);
                     return true;
                 } else {

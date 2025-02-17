@@ -1,7 +1,6 @@
 package org.proha.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -14,8 +13,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.proha.exceptions.ValidationException;
-import org.proha.model.dto.ExamDTO;
-import org.proha.model.dto.ResultDTO;
 import org.proha.model.dto.StudentDTO;
 import org.proha.notification.model.NotificationType;
 import org.proha.service.SubjectService;

@@ -21,8 +21,8 @@
     <h1>Register</h1>
 
     <jsp:include page="/jsp/includes/notification.jsp" />
-    <div class="card">
-        <form action="${pageContext.request.contextPath}/register" method="post">
+    <div class="card mt-1">
+        <form action="${pageContext.request.contextPath}/auth/register" method="post">
             <div class="content-medium">
                 <input type="hidden" name="csrf_token" value="${csrfToken}" />
 

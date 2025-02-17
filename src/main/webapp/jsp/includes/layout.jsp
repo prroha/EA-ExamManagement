@@ -10,7 +10,7 @@
 <body>
 <!-- Header -->
 <header class="admin-header">
-    <div class="header__left">
+    <div class="header__left" style="align-items: center;">
         <%
             Object user = session.getAttribute("authenticatedUser");
             if (user != null) {
@@ -23,7 +23,7 @@
         %>
         <div class="header__title">XYZ Academy</div>
     </div>
-    <div class="header__right">
+    <div class="header__right" style="display: inline-flex; gap: 10px; align-items: center;">
         <%
             if (user != null) {
         %>

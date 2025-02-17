@@ -350,7 +350,7 @@ Allowing for consistency accross app*/
     /*justify-content: center;*/
     align-items: center;
     min-height: 100vh;
-    margin-top: calc(var(--header-height) + 1rem);
+    /*margin-top: calc(var(--header-height) + 1rem);*/
     padding: 1rem;
     background-color: var(--background-color);
     transition: margin-left 0.3s ease-in-out;

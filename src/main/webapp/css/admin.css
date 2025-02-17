@@ -1,22 +1,7 @@
-/* Header */
-.admin-header {
-    height: var(--header-height);
-    background: var(--gray-color);
-    color: var(--text-color);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    /*padding: 0 var(--mb-2);*/
-    padding:0 var(--spacing-large);
-    position: fixed;
-    top: 0;
-    /*left: 250px; !* Adjusted for sidebar width *!*/
-    /*width: calc(100% - 250px); !* Adjusted for sidebar width *!*/
-    /*z-index: var(--z-fixed);*/
-    width: 100%;
-    z-index: var(--z-fixed);
+body {
+    margin: 0;
 }
-
+/* Header */
 .header__content {
     display: grid;
     align-items: center;
@@ -25,9 +10,6 @@
     justify-content: space-between;
 }
 /* Sidebar */
-.sidebar {
-    transform: translateX(-100%);
-}
 .sidebar__toggle {
     display: flex;
     justify-content: center;
@@ -61,15 +43,15 @@
     color: var(--gray-color);
 }
 
-.sidebar--active {
-    transform: translateX(0);
-}
-
 /*.sidebar__nav {*/
 /*    display: flex;*/
 /*    flex-direction: column;*/
 /*    height: 100%;*/
 /*}*/
+
+.sidebar--active {
+    transform: translateX(0) !important;
+}
 
 .sidebar--active ~ .main-content-center {
     margin-left: 250px;
@@ -137,14 +119,18 @@
     z-index: var(--z-fixed);
 }
 
-.header__content {
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    height: 100%;
-    padding: 0 var(--space-4);
-    max-width: var(--content-max-width);
+.header__title {
+    font-size: var(--h1-font-size);
+    color: var(--neutral-600);
 }
+/*.header__content {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: start;*/
+/*    height: 100%;*/
+/*    padding: 0 var(--space-4);*/
+/*    max-width: var(--content-max-width);*/
+/*}*/
 
 /* Profile Components */
 .header__profile {
@@ -242,6 +228,7 @@
 .header__toggle {
     margin-right: var(--space-2);
     cursor: pointer;
+    color: var(--neutral-600);
 }
 
 /* Remove unnecessary margins from text */
@@ -275,6 +262,7 @@
     flex-direction: column;
     transition: transform var(--transition-normal);
     padding: var(--spacing-medium) 0;
+    transform: translateX(-100%);
 }
 
 .sidebar__nav {
@@ -291,7 +279,7 @@
     align-items: center;
     gap: var(--space-3);
     padding: var(--space-3) var(--space-4);
-    color: var(--neutral-100);
+    color: var(--neutral-600);
     border-radius: var(--border-radius);
     transition: all var(--transition-fast);
 }
